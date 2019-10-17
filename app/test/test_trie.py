@@ -21,7 +21,7 @@ class TestIndexing(unittest.TestCase):
         trie = trie()
         trie.add_words([(1, "test"), (2, "tester")])
         self.assertEqual(list(trie.root.get_children().keys())[0], 't')
-        self.assertEqual(trie.autocomplete("test"), [(1, 'test'), (2, 'tester')])
+        self.assertEqual(trie.autocomplete("test"), [(1, 'test', None), (2, 'tester', None)])
 
     def test_trie_autocomplete(self):
         trie = trie()
@@ -29,11 +29,11 @@ class TestIndexing(unittest.TestCase):
         trie.add_word(2, "tester")
         trie.add_word(3, "team")
 
-        self.assertEqual(trie.autocomplete("t"), [(1, 'test'), (2, 'tester'), (3, 'team')])
-        self.assertEqual(trie.autocomplete("te"), [(1, 'test'), (2, 'tester'), (3, 'team')])
-        self.assertEqual(trie.autocomplete("tes"), [(1, 'test'), (2, 'tester')])
-        self.assertEqual(trie.autocomplete("test"), [(1, 'test'), (2, 'tester')])
-        self.assertEqual(trie.autocomplete("tester"), [(2, 'tester')])
+        self.assertEqual(trie.autocomplete("t"), [(1, 'test', None), (2, 'tester', None), (3, 'team', None)])
+        self.assertEqual(trie.autocomplete("te"), [(1, 'test', None), (2, 'tester', None), (3, 'team', None)])
+        self.assertEqual(trie.autocomplete("tes"), [(1, 'test', None), (2, 'tester', None)])
+        self.assertEqual(trie.autocomplete("test"), [(1, 'test', None), (2, 'tester', None)])
+        self.assertEqual(trie.autocomplete("tester"), [(2, 'tester', None)])
         self.assertEqual(trie.autocomplete("tested"), [])
 
     def test_trie_duplicates(self):
@@ -41,7 +41,7 @@ class TestIndexing(unittest.TestCase):
         trie.add_word(1, "test")       
         trie.add_word(2, "test")    
         trie.add_word(3, "team")    
-        self.assertEqual(trie.autocomplete("t"), [(1, "test"), (2, "test"), (3, "team")])  
+        self.assertEqual(trie.autocomplete("t"), [(1, "test", None), (2, "test", None), (3, "team", None)])  
 
 if __name__ == '__main__':
     unittest.main()
