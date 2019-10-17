@@ -14,7 +14,7 @@ class TestDevelopmentConfig(TestCase):
         return app
 
     def test_app_is_development(self):
-        self.assertFalse(app.config['SECRET_KEY'] is 'light_saber_exist')
+        self.assertFalse(app.config['SECRET_KEY'] is 'light_sabers_exist')
         self.assertTrue(app.config['DEBUG'] is True)
         self.assertFalse(current_app is None)
 
@@ -25,7 +25,7 @@ class TestTestingConfig(TestCase):
         return app
 
     def test_app_is_testing(self):
-        self.assertFalse(app.config['SECRET_KEY'] is 'light_saber_exist')
+        self.assertFalse(app.config['SECRET_KEY'] is 'light_sabers_exist')
         self.assertTrue(app.config['DEBUG'])
 
 
