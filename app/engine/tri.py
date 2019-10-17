@@ -94,7 +94,6 @@ class Tri:
             return self.dps_traverse(node)
         return []
 
-
     def add_words(self, content):
         """Interfarce for populating the tri
 
