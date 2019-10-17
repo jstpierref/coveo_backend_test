@@ -42,7 +42,7 @@ class Trie:
                 return None
         return current_node
             
-    def add_word(self, reference_id, word):
+    def add_word(self, reference_id, word, word_type=None):
         """Adds word and its reference id to the tri
     
         Args:
@@ -55,7 +55,7 @@ class Trie:
             if char not in current_node.get_children().keys():
                 current_node.add_child(char)
             current_node = current_node.get_children()[char]
-        current_node.add_payload((reference_id, word))
+        current_node.add_payload((reference_id, word, word_type))
 
     def dps_print_from_root(self):
         """Debug method to examine the trie content."""
@@ -102,6 +102,6 @@ class Trie:
         Args:
             content (list): list of tuples with words and reference ids
         """
-        for reference_id, word in content:
-            self.add_word(reference_id, word)
+        for reference_id, word, word_type in content:
+            self.add_word(reference_id, word, word_type)
 

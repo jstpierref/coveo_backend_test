@@ -16,6 +16,8 @@ class Parser:
                 city_data[int(row['id'])]['alt_name'] = row['alt_name']
                 city_data[int(row['id'])]['lat'] = row['lat']
                 city_data[int(row['id'])]['long'] = row['long']
+                city_data[int(row['id'])]['country'] = row['country']
+                city_data[int(row['id'])]['admin1'] = row['admin1']
         return city_data
 
     def run(self):
