@@ -4,8 +4,10 @@ import unittest
 from flask_script import Manager
 
 from app.main import create_app
+from app.blueprint import blueprint
 
 app = create_app(os.getenv('APP_SETTINGS') or 'dev')
+app.register_blueprint(blueprint)
 
 app.app_context().push()
 
