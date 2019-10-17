@@ -7,8 +7,6 @@ class TestIndexing(unittest.TestCase):
         tri = Tri()
         tri.add_word(1, "test")
 
-        # tri.dps_print()
-
         self.assertEqual(list(tri.root.get_children().keys())[0], 't')
         next_node = tri.root.get_children()['t']
         self.assertEqual(list(next_node.get_children().keys())[0], 'e')
@@ -19,26 +17,31 @@ class TestIndexing(unittest.TestCase):
 
         self.assertEqual(len(tri.root.get_children().keys()), 1)
 
-    def test_get_table_elements(self):
+    def test_add_words(self):
+        tri = Tri()
+        tri.add_words([(1, "test"), (2, "tester")])
+        self.assertEqual(list(tri.root.get_children().keys())[0], 't')
+        self.assertEqual(tri.autocomplete("test"), [(1, 'test'), (2, 'tester')])
+
+    def test_autocomplete(self):
         tri = Tri()
         tri.add_word(1, "test")
         tri.add_word(2, "tester")
         tri.add_word(3, "team")
 
-        self.assertEqual(tri.get_table_elements("t"), [1,2,3])
-        self.assertEqual(tri.get_table_elements("te"), [1,2,3])
-        self.assertEqual(tri.get_table_elements("tes"), [1,2])
-        self.assertEqual(tri.get_table_elements("test"), [1,2])
-        self.assertEqual(tri.get_table_elements("tester"), [2])
-        self.assertEqual(tri.get_table_elements("tested"), [])
-        # self.assertTrue('FOO'.isupper())
-        # self.assertFalse('Foo'.isupper())
+        self.assertEqual(tri.autocomplete("t"), [(1, 'test'), (2, 'tester'), (3, 'team')])
+        self.assertEqual(tri.autocomplete("te"), [(1, 'test'), (2, 'tester'), (3, 'team')])
+        self.assertEqual(tri.autocomplete("tes"), [(1, 'test'), (2, 'tester')])
+        self.assertEqual(tri.autocomplete("test"), [(1, 'test'), (2, 'tester')])
+        self.assertEqual(tri.autocomplete("tester"), [(2, 'tester')])
+        self.assertEqual(tri.autocomplete("tested"), [])
 
     def test_duplicates(self):
         tri = Tri()
         tri.add_word(1, "test")       
         tri.add_word(2, "test")    
-        # self.assertEqual(s.split(), ['hello', 'world'])
+        tri.add_word(3, "team")    
+        self.assertEqual(tri.autocomplete("t"), [(1, "test"), (2, "test"), (3, "team")])  
 
 if __name__ == '__main__':
     unittest.main()
