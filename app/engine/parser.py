@@ -1,0 +1,27 @@
+import csv
+
+class Parser:
+    def __init__(self, filepath):
+        self.filepath = filepath
+
+    @staticmethod
+    def parse_tsv(filepath):
+        city_data = {}
+        with open(filepath, encoding="UTF-8") as tsvfile:
+            reader = csv.DictReader(tsvfile, 
+                dialect="excel-tab", delimiter='\t', quoting=csv.QUOTE_NONE)
+            for row in reader:
+                city_data[int(row['id'])] = {}
+                city_data[int(row['id'])]['name'] = row['name']
+                city_data[int(row['id'])]['alt_name'] = row['alt_name']
+                city_data[int(row['id'])]['lat'] = row['lat']
+                city_data[int(row['id'])]['long'] = row['long']
+        return city_data
+
+    def run(self):
+        ext = self.filepath.split('.')[-1] 
+        if ext == 'tsv':
+            return self.parse_tsv(self.filepath)
+        else:
+            Exception('Extension `{}` not implemented in Parser'.format(ext))
+
