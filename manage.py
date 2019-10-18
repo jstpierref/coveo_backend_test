@@ -18,7 +18,8 @@ manager = Manager(app)
 
 @manager.command
 def run():
-    app.run()
+	port = os.getenv('PORT', 5000)
+    app.run(host='0.0.0.0', port=port)
 
 @manager.command
 def test():
