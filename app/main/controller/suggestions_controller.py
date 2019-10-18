@@ -14,7 +14,8 @@ api = Namespace("suggestions", description="Get city suggestions from keyword")
 @api.doc(params={'q': 'Query keyword'})
 class Suggestions(Resource):
     @api.doc("get_suggestions_from_keyword")
-    def get(self, q):
+    @api.response(200, 'Success')
+    def get(self):
         if not request.args.get("q"):
             abort(404, "Mandatory parameter `q` missing from current request")
         
@@ -31,5 +32,5 @@ class Suggestions(Resource):
         return response
 
     @api.doc(responses={403: 'Not Authorized'})
-    def post(self, q):
+    def post(self):
         api.abort(403)
