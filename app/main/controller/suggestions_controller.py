@@ -36,7 +36,3 @@ class Suggestions(Resource):
         response = Response(response, 
             content_type="application/json; charset=utf-8")
         return response
-
-    @api.doc(responses={403: "Not Authorized"})
-    def post(self):
-        api.abort(403)
