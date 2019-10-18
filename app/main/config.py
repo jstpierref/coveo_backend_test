@@ -5,7 +5,7 @@ load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    SECRET_KEY = os.getenv('APP_SECRET_KEY', 'light_sabers_exist')
+    SECRET_KEY = os.getenv("APP_SECRET_KEY", "light_sabers_exist")
     TESTING = False
     DEBUG = False
     CSRF_ENABLED = True
@@ -29,8 +29,8 @@ class ProductionConfig(Config):
 
 
 config_table = {
-    'dev': DevelopmentConfig,
-    'test': TestingConfig,
-    'staging': ProductionConfig,
-    'prod': ProductionConfig
+    "dev": DevelopmentConfig,
+    "test": TestingConfig,
+    "staging": ProductionConfig,
+    "prod": ProductionConfig
 }
