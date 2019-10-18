@@ -37,6 +37,8 @@ def deconstruct_string(string):
             substring_buffer = ""
         else:
             substring_buffer += char
+    if substring_buffer:
+        deconstructed_string.append(substring_buffer)
     return deconstructed_string
     
 
