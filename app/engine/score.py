@@ -22,7 +22,6 @@ class QueryScoreProcessor:
 		name (e.g.: 'new' and 'york' have positions 0 and 1 respectively 
 		in 'new-york')
 	"""
-	indexer = indexer
 	@classmethod
 	def run(cls, query_word):
 		search_results = indexer.lookup(query_word)
@@ -72,7 +71,6 @@ class GeoScoreProcessor:
 	Distance between points is first calculated in km, assuming the Earth is 
 	a perfect sphere, and a simple math.exp(-d/300) is applied.
 	"""
-	indexer = indexer
 	@classmethod
 	def run(cls, ids, lat1, lon1):
 		scores = {}
@@ -90,7 +88,6 @@ class GeoScoreProcessor:
 
 class AdditionalData:
 	"""Aggregates additional data for the API response"""
-	indexer = indexer 
 	field_name_cast = {}
 	field_value_cast = {}
 
