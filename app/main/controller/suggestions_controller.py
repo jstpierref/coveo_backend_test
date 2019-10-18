@@ -15,7 +15,7 @@ class Suggestions(Resource):
     @api.doc('get_suggestions_from_keyword')
     def get(self):
         if not request.args.get('q'):
-            abort(404)
+            abort(404, "Mandatory parameter `q` missing from current request")
         
         query = Query(request.args)
         data = ScoreInterface().run(query)
