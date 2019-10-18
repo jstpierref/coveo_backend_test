@@ -3,7 +3,7 @@
 The current version is deployed on Heroku as a Docker container. I used Semaphore platform to handle the CI/CD pipeline.
 
 Basically, Semaphore builds the image, runs the tests and deploy the container to Heroku.
- 
+
 ## How it works: the indexer
 
 General city data are stored in memory in a hash table and the search index itself uses a trie data structure, which ensures fast lookups.
@@ -26,7 +26,7 @@ If geographical coordinates are given, the score is calculated as:<br />
 And if it not the case the score is obtained via:<br />
 `score = 0.4*length_score + 0.3*type_score + 0.3*position_socre`
 
-Many of those choices are heuristics, therefore subjective. One improvement would to optimized the implied functions and parameters according to some preferred behaviors.
+Many of those choices are subjective. One improvement would be to optimized the implied functions and parameters according to some preferred behaviors.
 
 ### Build, test and run locally
 Install and create a virtual environement
@@ -108,5 +108,5 @@ These responses are meant to provide guidance. The exact values can vary based o
 * POST requests handling to change backend state
 * Authentication
 * Improve API engine with:
-	* n-gram models for fuzzy string search
-	* Word embedding based (neural nets) to capture semantics
+	* n-gram based distances for fuzzy string search
+	* Word embedding based distances (neural nets) to capture semantics
