@@ -10,8 +10,14 @@ from app.engine.score import ScoreInterface
 
 api = Namespace("suggestions", description="Get city suggestions from keyword")
 
+query_params = {
+    "q": "Query keyword", 
+    "lattitude": "City lattitude", 
+    "longitude": "City longitude"
+}
+
 @api.route("")
-@api.doc(params={'q': 'Query keyword'})
+@api.doc(params=query_params)
 class Suggestions(Resource):
     @api.doc("get_suggestions_from_keyword")
     @api.response(200, 'Success')
@@ -31,6 +37,6 @@ class Suggestions(Resource):
             content_type="application/json; charset=utf-8")
         return response
 
-    @api.doc(responses={403: 'Not Authorized'})
+    @api.doc(responses={403: "Not Authorized"})
     def post(self):
         api.abort(403)
