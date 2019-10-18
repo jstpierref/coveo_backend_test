@@ -10,7 +10,7 @@ from app.engine.score import ScoreInterface
 
 api = Namespace('suggestions', description='Get city suggestions from keyword')
 
-@api.route('/')
+@api.route('')
 class Suggestions(Resource):
     @api.doc('get_suggestions_from_keyword')
     def get(self):
