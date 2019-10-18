@@ -1,31 +1,46 @@
 version: v1.0
-name: First pipeline
+name: Flask City Search Engine - Coveo Challenge
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Lint
+  - name: Build
     task:
+      secrets:
+        - name: city-search-engine
+      jobs:
+      - name: Docker build
+        commands:
+          - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+          - checkout
+          - docker-compose build
+          - docker tag api:latest "$DOCKER_USERNAME"/api:latest
+          - docker tag api:latest "$DOCKER_USERNAME"/api:$SEMAPHORE_WORKFLOW_ID
+          - docker push "$DOCKER_USERNAME"/api:latest
+          - docker push "$DOCKER_USERNAME"/api:$SEMAPHORE_WORKFLOW_ID
+          - docker images
+
+  - name: Run & Test Docker image
+    task:
+      secrets:
+        - name: city-search-engine
       prologue:
         commands:
+          - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           - checkout
+          - docker pull "$DOCKER_USERNAME"/api
+          - docker-compose up -d
       jobs:
-        - name: make lint
-          commands:
-            - echo "lint your code"
-  - name: Unit tests
-    task:
-      prologue:
+      - name: Check Running Images
         commands:
-          - checkout
-      jobs:
-        - name: Unit tests 1/3
-          commands:
-            - echo "run 1/3"
-        - name: Unit tests 2/3
-          commands:
-            - echo "run 2/3"
-        - name: Unit tests 3/3
-          commands:
-            - echo "run 3/3"
+          - docker ps
+      - name: Run Unit test
+        commands:
+          - docker exec -it semaphore-flask_city_search_engine_1 python manage.py test
+
+promotions:
+  - name: Deploy to Heroku
+    pipeline_file: deploy-heroku.yml
+    auto_promote_on:
+      - result: passed
