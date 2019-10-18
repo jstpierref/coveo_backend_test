@@ -1,5 +1,9 @@
 # Coveo Backend Coding Challenge
 
+The current version is deployed on Heroku as a Docker container. I used Semaphore platform to handle the CI/CD pipeline.
+
+Basically, Semaphore builds the image, runs the tests and deploy the container to Heroku.
+ 
 ## How it works: the indexer
 
 General city data are stored in memory in a hash table and the search index itself uses a trie data structure, which ensures fast lookups.
@@ -17,9 +21,9 @@ Multiple criterias are used to obtained a general search score for each suggesti
     in 'new-york'). The score is obtained via 1/(position+1), so it is allways between between 0 and 1.
 * Geographical distance: a distance in km is calculated between query coordinates and index keyword coordinates and a simple math.exp(-d/300) operation is applied to to get a score between 0 and 1.
 
-If geographical coordinates are given, the score is calculated as:
-`score = 0.3*length_score + 0.1*type_score + 0.1*position_socre + 0.5*geo`
-And if it not the case the score is obtained via:
+If geographical coordinates are given, the score is calculated as:<br />
+`score = 0.3*length_score + 0.1*type_score + 0.1*position_socre + 0.5*geo`<br /><br />
+And if it not the case the score is obtained via:<br />
 `score = 0.4*length_score + 0.3*type_score + 0.3*position_socre`
 
 Many of those choices are heuristics, therefore subjective. One improvement would to optimized the implied functions and parameters according to some preferred behaviors.
