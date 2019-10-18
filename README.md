@@ -103,7 +103,7 @@ These responses are meant to provide guidance. The exact values can vary based o
 }
 ```
 
-## Potential improvments
+## Potential improvements
 
 * Cache layer
 * Database
