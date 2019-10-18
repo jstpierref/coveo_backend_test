@@ -1,5 +1,5 @@
 import unittest
-from app.engine.trie import trie
+from app.engine.trie import Trie
 
 class TestIndexing(unittest.TestCase):
 
