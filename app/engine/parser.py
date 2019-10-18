@@ -1,4 +1,5 @@
 import csv
+from app.engine.data import canada_provinces_mapping, country_mapping
 
 class Parser:
     def __init__(self, filepath):
@@ -16,8 +17,13 @@ class Parser:
                 city_data[int(row['id'])]['alt_name'] = row['alt_name']
                 city_data[int(row['id'])]['lat'] = row['lat']
                 city_data[int(row['id'])]['long'] = row['long']
-                city_data[int(row['id'])]['country'] = row['country']
-                city_data[int(row['id'])]['admin1'] = row['admin1']
+                city_data[int(row['id'])]['country'] = country_mapping[row['country']]
+                if row['country'] == "CA":
+                    city_data[int(row['id'])]['admin1'] = \
+                        canada_provinces_mapping[row['admin1']]
+                else:
+                    city_data[int(row['id'])]['admin1'] = row['admin1']
+
         return city_data
 
     def run(self):
@@ -26,4 +32,3 @@ class Parser:
             return self.parse_tsv(self.filepath)
         else:
             Exception('Extension `{}` not implemented in Parser'.format(ext))
-
