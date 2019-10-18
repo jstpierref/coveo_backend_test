@@ -11,9 +11,10 @@ from app.engine.score import ScoreInterface
 api = Namespace("suggestions", description="Get city suggestions from keyword")
 
 @api.route("")
+@api.doc(params={'q': 'Query keyword'})
 class Suggestions(Resource):
     @api.doc("get_suggestions_from_keyword")
-    def get(self):
+    def get(self, q):
         if not request.args.get("q"):
             abort(404, "Mandatory parameter `q` missing from current request")
         
@@ -28,3 +29,7 @@ class Suggestions(Resource):
         response = Response(response, 
             content_type="application/json; charset=utf-8")
         return response
+
+    @api.doc(responses={403: 'Not Authorized'})
+    def post(self, q):
+        api.abort(403)
