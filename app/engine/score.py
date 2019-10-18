@@ -36,9 +36,9 @@ class QueryScoreProcessor:
 
 		def search_result_type_value(rtype):
 			rtype_values = {
-			'name': 1.,
-			'sub_name': 0.5,
-			'alt_name': 0.5
+			"name": 1.,
+			"sub_name": 0.5,
+			"alt_name": 0.5
 			}
 			return rtype_values[rtype]
 
@@ -47,7 +47,7 @@ class QueryScoreProcessor:
 
 		search_result_buffer = {}
 
-		for current_rtype in ('name','sub_name','alt_name'):
+		for current_rtype in ("name","sub_name","alt_name"):
 			for search_result in search_results:
 				idx, word, rtype, pos = search_result
 				if rtype == current_rtype and idx not in search_result_buffer.keys():
@@ -76,8 +76,8 @@ class GeoScoreProcessor:
 		scores = {}
 		for i in ids:
 			data = indexer.city_data[i]
-			lat2 = data['lat']
-			lon2 = data['long']
+			lat2 = data["lat"]
+			lon2 = data["long"]
 			d = utils.calculate_distance(lat1, lon1, lat2, lon2)
 			scores[i] = cls.apply_logic(d)
 		return scores
@@ -122,10 +122,10 @@ class ScoreInterface:
 
 		returned_data = additional_data
 		for idx in returned_data.keys():
-			returned_data[idx]['score'] = round(global_scores[idx],2)
+			returned_data[idx]["score"] = round(global_scores[idx],2)
 
 		returned_data = list(returned_data.values())
-		returned_data.sort(key=lambda x: x['score'], reverse=True)
+		returned_data.sort(key=lambda x: x["score"], reverse=True)
 		return returned_data
 
 	@staticmethod

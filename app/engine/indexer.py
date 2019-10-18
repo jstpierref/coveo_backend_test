@@ -32,10 +32,10 @@ class Indexer:
         """Goes over parsed data to extract city names and alt names"""
         names = []
         for key, value in self.city_data.items():
-            names.extend([(key, utils.standardize(value['name']), 'name', 0)])
-            if value['alt_name']:
-                alt_names = value['alt_name'].split(',')
-                names.extend([(key, utils.standardize(n), 'alt_name', 0) \
+            names.extend([(key, utils.standardize(value["name"]), "name", 0)])
+            if value["alt_name"]:
+                alt_names = value["alt_name"].split(",")
+                names.extend([(key, utils.standardize(n), "alt_name", 0) \
                     for n in alt_names])
         self.city_names =  names
 
@@ -55,7 +55,7 @@ class Indexer:
             if " " in name or "-" in name:
                 deconstructed_string = utils.deconstruct_string(name)
                 for i, word in enumerate(deconstructed_string):
-                    city_names_buffer.append((idx, word, 'sub_name', i))
+                    city_names_buffer.append((idx, word, "sub_name", i))
 
         self.city_names.extend(city_names_buffer)
 
