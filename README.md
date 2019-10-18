@@ -78,3 +78,11 @@ These responses are meant to provide guidance. The exact values can vary based o
 ```
 
 ## Potential improvments
+
+* Cache layer
+* Database
+* POST requests handling to change backend state
+* Authentication
+* Improve API engine with:
+	* n-gram models for fuzzy string search
+	* Word embedding based (neural nets) to capture semantics
