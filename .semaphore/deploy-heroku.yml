@@ -28,10 +28,10 @@ blocks:
             - checkout
             # login to Docker Hub and pull the image
             - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-            - docker pull "$DOCKER_USERNAME"/api:$SEMAPHORE_WORKFLOW_ID
+            - docker pull "$DOCKER_USERNAME"/flask_city_search_engine:$SEMAPHORE_WORKFLOW_ID
             # push the image to Heroku registry
             - heroku container:login
-            - docker tag "$DOCKER_USERNAME"/api:$SEMAPHORE_WORKFLOW_ID registry.heroku.com/$HEROKU_APP/web
+            - docker tag "$DOCKER_USERNAME"/flask_city_search_engine:$SEMAPHORE_WORKFLOW_ID registry.heroku.com/$HEROKU_APP/web
             - docker push registry.heroku.com/$HEROKU_APP/web
             # define environment variable for MongoDB connection
             #- heroku config:set DB="$MONGODB_URI"
