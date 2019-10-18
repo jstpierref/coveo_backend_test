@@ -12,7 +12,7 @@ api = Namespace("suggestions", description="Get city suggestions from keyword")
 
 query_params = {
     "q": "Query keyword", 
-    "lattitude": "City lattitude", 
+    "latitude": "City latitude", 
     "longitude": "City longitude"
 }
 
