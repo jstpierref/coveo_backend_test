@@ -5,6 +5,7 @@ The current version is deployed on Heroku as a Docker container. I used Semaphor
 Basically, Semaphore builds the image, runs the tests and deploy the container to Heroku.
 
 HTTP API endpoint: [http://city-search-engine.herokuapp.com/](http://city-search-engine.herokuapp.com/)
+
 HTTPS API endpoint: [https://city-search-engine.herokuapp.com/](https://city-search-engine.herokuapp.com/) (Swagger not showing up for now)
 
 Public Docker image: [https://hub.docker.com/r/jstpierref/flask_city_search_engine](https://hub.docker.com/r/jstpierref/flask_city_search_engine)
