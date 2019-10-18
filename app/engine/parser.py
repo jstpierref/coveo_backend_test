@@ -15,7 +15,7 @@ class Parser:
         "11": "SK",
         "12": "YT",
         "13": "NT",
-        "14": "NU",
+        "14": "NU"
     }
 
     country_mapping = {
