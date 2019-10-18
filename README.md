@@ -2,19 +2,27 @@
 
 ## How it works: the indexer
 
+General city data are stored in memory in a hash table and the search index itself uses a trie data structure, which ensures fast lookups.
+
 ## How it works: the score
 
-* length: based query keyword and index keyword respective length. The score is higher if query and found keyword have similar length
-* type: The score is higher if query corresponds to
-    an official name (`name`) than an alternative name (`alt_name`) or a
-    subname of city name (`sub_name`) in the index (e.g.: 'york' is a subname of 'new-york').
-* position: based on query keyword position in index keyword. If query is a subname of a city name, 
+Multiple criterias are used to obtained a general search score for each suggestion given a keyword `q`:
+* Length: based query keyword and index keyword respective length. The score is higher if query and found keyword have similar length. The score is obtained via len(query_word)/len(index_keyword) and it is allways between 0 and 1.
+* Type: The score is higher if query corresponds to
+    an official name (`name`, score: 1.) than an alternative name (`alt_name`, score: 0.5) or a
+    subname of city name (`sub_name`, score: 0.5) in the index (e.g.: 'york' is a subname of 'new-york').
+* Position: based on query keyword position in index keyword. If query is a subname of a city name, 
     gives higher score if the substring is located at the beginning of city 
     name (e.g.: 'new' and 'york' have positions 0 and 1 respectively 
-    in 'new-york')
+    in 'new-york'). The score is obtained via 1/(position+1), so it is allways between between 0 and 1.
+* Geographical distance: a distance in km is calculated between query coordinates and index keyword coordinates and a simple math.exp(-d/300) operation is applied to to get a score between 0 and 1.
 
-* Distance between points is first calculated in km, assuming the Earth is 
-a perfect sphere, and a simple math.exp(-d/300) is applied.
+If geographical coordinates are given, the score is calculated as:
+`score = 0.3*length_score + 0.1*type_score + 0.1*position_socre + 0.5*geo`
+And if it not the case the score is obtained via:
+`score = 0.4*length_score + 0.3*type_score + 0.3*position_socre`
+
+Many of those choices are heuristics, therefore subjective. One improvement would to optimized the implied functions and parameters according to some preferred behaviors.
 
 ### Build, test and run locally
 Install and create a virtual environement
