@@ -24,9 +24,9 @@ Multiple criterias are used to obtained a general search score for each suggesti
 * Geographical distance: a distance in km is calculated between query coordinates and index keyword coordinates and a simple math.exp(-d/300) operation is applied to to get a score between 0 and 1.
 
 If geographical coordinates are given, the score is calculated as:<br />
-`score = 0.3*length_score + 0.1*type_score + 0.1*position_socre + 0.5*geo`<br /><br />
+`score = 0.3*length_score + 0.1*type_score + 0.1*position_score + 0.5*geo_score`<br /><br />
 And if it not the case the score is obtained via:<br />
-`score = 0.4*length_score + 0.3*type_score + 0.3*position_socre`
+`score = 0.4*length_score + 0.3*type_score + 0.3*position_score`
 
 Many of those choices are subjective. One improvement would be to optimized the implied functions and parameters according to some preferred behaviors.
 
