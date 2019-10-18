@@ -1,3 +1,5 @@
+# File containing relevant data for the engine processes
+
 canada_provinces_mapping = {
     "01": "AB",
     "02": "BC",

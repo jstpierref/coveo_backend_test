@@ -9,6 +9,19 @@ import app.engine.utils as utils
 indexer = Indexer(os.getenv("APP_DATA_PATH", "data/cities_canada-usa.tsv"))
 
 class QueryScoreProcessor:
+	"""Class calculating query/keyword match score based on mulitple assumptions
+	such as:
+
+	1. `search_result_length_value`: gives higher score if query and found 
+		keyword have similar lenght
+	2.  `search_result_type_value`: gives higher score if query corresponds to
+		an official name (`name`) than an alternative name (`alt_name`) or a
+		subname of city name (`sub_name`) (e.g.: 'york' is a subname of 'new-york')
+	3. `search_result_position_value`: if query is a subname of a city name, 
+		gives higher score if the substring is located at the beginning of city 
+		name (e.g.: 'new' and 'york' have positions 0 and 1 respectively 
+		in 'new-york')
+	"""
 	indexer = indexer
 	@classmethod
 	def run(cls, query_word):
@@ -53,6 +66,12 @@ class QueryScoreProcessor:
 		return scores
 
 class GeoScoreProcessor:
+	"""Class calculating the normalized score from query and matched cities
+	geo-location.
+
+	Distance between points is first calculated in km, assuming the Earth is 
+	a perfect sphere, and a simple math.exp(-d/300) is applied.
+	"""
 	indexer = indexer
 	@classmethod
 	def run(cls, ids, lat1, lon1):
@@ -68,11 +87,10 @@ class GeoScoreProcessor:
 	@staticmethod
 	def apply_logic(x):
 		return math.exp(-x/300)
-		# deals with indexer.city_data
 
 class AdditionalData:
+	"""Aggregates additional data for the API response"""
 	indexer = indexer 
-	# fields = ['name', 'country', 'admin1', 'lat', 'long']
 	field_name_cast = {}
 	field_value_cast = {}
 
@@ -81,7 +99,6 @@ class AdditionalData:
 		data = {}
 		for i in ids:
 			data[i] = {}
-			# for f in cls.fields:
 			name = indexer.city_data[i]["name"]
 			country = indexer.city_data[i]["country"]
 			admin = indexer.city_data[i]["admin1"]
@@ -92,9 +109,8 @@ class AdditionalData:
 
 
 class ScoreInterface:
-	query = QueryScoreProcessor
-	geo = GeoScoreProcessor
-
+	"""Class exposing indexer and scoring logic to API routes.
+	"""
 	def run(self, query):
 		geo_scores = None
 		word = query.q
@@ -128,5 +144,4 @@ class ScoreInterface:
 				qs = query_scores[idx]
 				scores[idx] = 0.4*qs[0] + 0.3*qs[1] + 0.3*qs[2]
 		return scores
-	# singleton?
 

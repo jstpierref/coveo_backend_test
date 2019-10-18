@@ -2,6 +2,11 @@ import csv
 from app.engine.data import canada_provinces_mapping, country_mapping
 
 class Parser:
+    """Class responsible for parsing the data files and for some preprocessing.
+
+    Attributes:
+        filepath (str): path of tsv file (only format supported)
+    """
     def __init__(self, filepath):
         self.filepath = filepath
 
@@ -17,7 +22,8 @@ class Parser:
                 city_data[int(row['id'])]['alt_name'] = row['alt_name']
                 city_data[int(row['id'])]['lat'] = row['lat']
                 city_data[int(row['id'])]['long'] = row['long']
-                city_data[int(row['id'])]['country'] = country_mapping[row['country']]
+                city_data[int(row['id'])]['country'] = \
+                    country_mapping[row['country']]
                 if row['country'] == "CA":
                     city_data[int(row['id'])]['admin1'] = \
                         canada_provinces_mapping[row['admin1']]

@@ -12,12 +12,14 @@ api = Namespace('suggestions', description='All valid suggestions')
 
 @api.route('/')
 class Suggestions(Resource):
-    @api.doc('list_of_valid_suggestions')
+    @api.doc('get_suggestions_from_keyword')
     def get(self):
         if not request.args.get('q'):
             abort(404)
+        
         query = Query(request.args)
         data = ScoreInterface().run(query)
+
         response = {
             'suggestions': data
         }
