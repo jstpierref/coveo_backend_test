@@ -9,7 +9,6 @@ class Config:
     TESTING = False
     DEBUG = False
     CSRF_ENABLED = True
-    # PORT = os.getenv("PORT", 5000)
 
 class DevelopmentConfig(Config):
     DEBUG = True

@@ -28,6 +28,7 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 
 
 def deconstruct_string(string):
+    """e.g: splits 'New-York city' into ['New', 'York', 'city']"""
     substring_buffer = ""
     deconstructed_string = []
     for char in string:
@@ -52,14 +53,11 @@ def translate_if_necessary(string):
 def unidecode_string(string):
     return unidecode.unidecode(string)
 
-
 def standardize(name):
     return name.lower().strip()
-    # name = utils.translate_if_necessary(name)
     
 def decode(name):
     name = unidecode_string(name)
-
     if "'" in name or "`" in name or "[?]" in name:
         name = "".join(name.split("'"))
         name = "".join(name.split("`"))

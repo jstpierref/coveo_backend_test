@@ -8,16 +8,18 @@ from app.engine.query import Query
 from app.engine.score import ScoreInterface
 
 
-api = Namespace('suggestions', description='All valid suggestions')
+api = Namespace('suggestions', description='Get city suggestions from keyword')
 
 @api.route('/')
 class Suggestions(Resource):
-    @api.doc('list_of_valid_suggestions')
+    @api.doc('get_suggestions_from_keyword')
     def get(self):
         if not request.args.get('q'):
-            abort(404)
+            abort(404, "Mandatory parameter `q` missing from current request")
+        
         query = Query(request.args)
         data = ScoreInterface().run(query)
+
         response = {
             'suggestions': data
         }
