@@ -14,12 +14,12 @@ class Translator:
         return self.translator.translate(string).text 
 
 
-def calculate_distance(lat_1, lon_1, lat_2, lon_2):
+def calculate_distance(lat1, lon1, lat2, lon2):
     R = 6373.0
-    lat1 = radians(lat1)
-    lon1 = radians(lon1)
-    lat2 = radians(lat2)
-    lon2 = radians(lon2)
+    lat1 = radians(float(lat1))
+    lon1 = radians(float(lon1))
+    lat2 = radians(float(lat2))
+    lon2 = radians(float(lon2))
     dlon = lon2 - lon1
     dlat = lat2 - lat1
     a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
@@ -51,3 +51,18 @@ def translate_if_necessary(string):
 
 def unidecode_string(string):
     return unidecode.unidecode(string)
+
+
+def standardize(name):
+    return name.lower().strip()
+    # name = utils.translate_if_necessary(name)
+    
+def decode(name):
+    name = unidecode_string(name)
+
+    if "'" in name or "`" in name or "[?]" in name:
+        name = "".join(name.split("'"))
+        name = "".join(name.split("`"))
+        name = "".join(name.split("[?]"))
+    return name
+
