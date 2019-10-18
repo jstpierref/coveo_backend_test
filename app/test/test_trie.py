@@ -21,7 +21,7 @@ class TestIndexing(unittest.TestCase):
         trie = Trie()
         trie.add_words([(1, "test", "name", 0), (2, "tester", "name", 0)])
         self.assertEqual(list(trie.root.get_children().keys())[0], 't')
-        self.assertEqual(trie.autocomplete("test"), [(1, 'test', None, 0), (2, 'tester', None, 0)])
+        self.assertEqual(trie.autocomplete("test"), [(1, 'test', "name", 0), (2, 'tester', "name", 0)])
 
     def test_trie_autocomplete(self):
         trie = Trie()
