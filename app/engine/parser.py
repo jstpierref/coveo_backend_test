@@ -1,28 +1,7 @@
 import csv
+from app.engine.data import canada_provinces_mapping, country_mapping
 
 class Parser:
-
-    canada_provinces_mapping = {
-        "01": "AB",
-        "02": "BC",
-        "03": "MB",
-        "04": "NB",
-        "05": "NL",
-        "07": "NS",
-        "08": "ON",
-        "09": "PE",
-        "10": "QC",
-        "11": "SK",
-        "12": "YT",
-        "13": "NT",
-        "14": "NU"
-    }
-
-    country_mapping = {
-        "CA": "Canada",
-        "US": "USA"
-    }
-
     def __init__(self, filepath):
         self.filepath = filepath
 
@@ -38,10 +17,10 @@ class Parser:
                 city_data[int(row['id'])]['alt_name'] = row['alt_name']
                 city_data[int(row['id'])]['lat'] = row['lat']
                 city_data[int(row['id'])]['long'] = row['long']
-                city_data[int(row['id'])]['country'] = self.country_mapping[row['country']]
+                city_data[int(row['id'])]['country'] = country_mapping[row['country']]
                 if row['country'] == "CA":
                     city_data[int(row['id'])]['admin1'] = \
-                        self.canada_provinces_mapping[row['admin1']]
+                        canada_provinces_mapping[row['admin1']]
                 else:
                     city_data[int(row['id'])]['admin1'] = row['admin1']
 
