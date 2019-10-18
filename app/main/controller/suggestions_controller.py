@@ -8,20 +8,20 @@ from app.engine.query import Query
 from app.engine.score import ScoreInterface
 
 
-api = Namespace('suggestions', description='Get city suggestions from keyword')
+api = Namespace("suggestions", description="Get city suggestions from keyword")
 
-@api.route('/')
+@api.route("")
 class Suggestions(Resource):
-    @api.doc('get_suggestions_from_keyword')
+    @api.doc("get_suggestions_from_keyword")
     def get(self):
-        if not request.args.get('q'):
+        if not request.args.get("q"):
             abort(404, "Mandatory parameter `q` missing from current request")
         
         query = Query(request.args)
         data = ScoreInterface().run(query)
 
         response = {
-            'suggestions': data
+            "suggestions": data
         }
 
         response = json.dumps(response, ensure_ascii=False)
