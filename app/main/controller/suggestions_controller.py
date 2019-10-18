@@ -8,7 +8,7 @@ from app.engine.query import Query
 from app.engine.score import ScoreInterface
 
 
-api = Namespace('suggestions', description='All valid suggestions')
+api = Namespace('suggestions', description='Get city suggestions from keyword')
 
 @api.route('/')
 class Suggestions(Resource):

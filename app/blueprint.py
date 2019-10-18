@@ -8,7 +8,7 @@ blueprint = Blueprint('api', __name__)
 api = Api(blueprint,
           title='Coveo Backend Test',
           version='1.0',
-          description='Swagger documentation'
+          description='API documentation'
           )
 
 api.add_namespace(suggestions_ns, path='/suggestions')
