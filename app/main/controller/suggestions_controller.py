@@ -1,4 +1,4 @@
-from flask import request, Response
+from flask import request, Response, abort
 from flask_restplus import Resource, Namespace
 
 import unidecode
@@ -14,6 +14,8 @@ api = Namespace('suggestions', description='All valid suggestions')
 class Suggestions(Resource):
     @api.doc('list_of_valid_suggestions')
     def get(self):
+        if not request.args.get('q'):
+            abort(404)
         query = Query(request.args)
         data = ScoreInterface().run(query)
         response = {
