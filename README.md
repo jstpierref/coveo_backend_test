@@ -4,6 +4,8 @@ The current version is deployed on Heroku as a Docker container. I used Semaphor
 
 Basically, Semaphore builds the image, runs the tests and deploy the container to Heroku.
 
+API endpoint: [http://city-search-engine.herokuapp.com/](http://city-search-engine.herokuapp.com/)
+
 ## How it works: the indexer
 
 General city data are stored in memory in a hash table and the search index itself uses a trie data structure, which ensures fast lookups.
