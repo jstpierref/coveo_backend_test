@@ -1,15 +1,7 @@
-from parser import Parser
-from trie import Trie
-import utils
-from tqdm import tqdm 
+from app.engine.parser import Parser
+from app.engine.trie import Trie
 
-def standardize(name):
-    name =  name.lower().strip()
-    name =  name.lower().strip()
-    # name = utils.translate_if_necessary(name)
-    name = utils.unidecode_string(name)
-
-    return name
+import app.engine.utils as utils
 
 
 class Indexer:
@@ -20,6 +12,7 @@ class Indexer:
 
         self._parse()
         self._extract_city_names()
+        self._supplement_city_names()
         self._build_trie()
 
     def _parse(self):
@@ -28,13 +21,28 @@ class Indexer:
 
     def _extract_city_names(self):
         names = []
-        for key, value in tqdm(self.city_data.items()):
-            names.extend([(key, standardize(value['name']), 'name')])
+        for key, value in self.city_data.items():
+            names.extend([(key, utils.standardize(value['name']), 'name', 0)])
             if value['alt_name']:
                 alt_names = value['alt_name'].split(',')
-                names.extend([(key, standardize(n), 'alt_name') for n in alt_names])
+                names.extend([(key, utils.standardize(n), 'alt_name', 0) for n in alt_names])
         self.city_names =  names
-        import pdb; pdb.set_trace()
+
+    def _supplement_city_names(self):
+        city_names_buffer = []
+        for city in self.city_names:
+            idx = city[0]
+            name = city[1]
+            name_type = city[2]
+            decoded_name = utils.decode(name)
+            if decoded_name != name:
+                city_names_buffer.append((idx, decoded_name, name_type, 0))
+            if " " in name or "-" in name:
+                deconstructed_string = utils.deconstruct_string(name)
+                for i, word in enumerate(deconstructed_string):
+                    city_names_buffer.append((idx, word, 'sub_name', i))
+
+        self.city_names.extend(city_names_buffer)
 
     def _build_trie(self):
         self.trie.add_words(self.city_names)
@@ -43,10 +51,11 @@ class Indexer:
         return self.trie.autocomplete(word)
 
 
-p = Indexer("data/cities_canada-usa.tsv")
+
+
 # print(p.city_names)
 
-print(p.lookup('mont'))
+# print(p.lookup('mont'))
 
 
 
