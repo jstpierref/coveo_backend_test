@@ -15,10 +15,10 @@ blocks:
           - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           - checkout
           - docker-compose build
-          - docker tag api:latest "$DOCKER_USERNAME"/api:latest
-          - docker tag api:latest "$DOCKER_USERNAME"/api:$SEMAPHORE_WORKFLOW_ID
-          - docker push "$DOCKER_USERNAME"/api:latest
-          - docker push "$DOCKER_USERNAME"/api:$SEMAPHORE_WORKFLOW_ID
+          - docker tag flask_city_search_engine:latest "$DOCKER_USERNAME"/flask_city_search_engine:latest
+          - docker tag flask_city_search_engine:latest "$DOCKER_USERNAME"/flask_city_search_engine:$SEMAPHORE_WORKFLOW_ID
+          - docker push "$DOCKER_USERNAME"/flask_city_search_engine:latest
+          - docker push "$DOCKER_USERNAME"/flask_city_search_engine:$SEMAPHORE_WORKFLOW_ID
           - docker images
 
   - name: Run & Test Docker image
@@ -29,7 +29,7 @@ blocks:
         commands:
           - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           - checkout
-          - docker pull "$DOCKER_USERNAME"/api
+          - docker pull "$DOCKER_USERNAME"/flask_city_search_engine
           - docker-compose up -d
       jobs:
       - name: Check Running Images
