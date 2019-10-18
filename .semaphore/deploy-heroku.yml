@@ -21,7 +21,7 @@ blocks:
       # https://docs.semaphoreci.com/article/66-environment-variables-and-secrets
       env_vars:
         - name: HEROKU_APP
-          value: city_search_engine
+          value: city-search-engine
       jobs:
         - name: Deploy
           commands:
