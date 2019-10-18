@@ -13,7 +13,7 @@ class QueryScoreProcessor:
 	such as:
 
 	1. `search_result_length_value`: gives higher score if query and found 
-		keyword have similar lenght
+		keyword have similar length
 	2.  `search_result_type_value`: gives higher score if query corresponds to
 		an official name (`name`) than an alternative name (`alt_name`) or a
 		subname of city name (`sub_name`) (e.g.: 'york' is a subname of 'new-york')

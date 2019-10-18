@@ -4,6 +4,18 @@
 
 ## How it works: the score
 
+* length: based query keyword and index keyword respective length. The score is higher if query and found keyword have similar length
+* type: The score is higher if query corresponds to
+    an official name (`name`) than an alternative name (`alt_name`) or a
+    subname of city name (`sub_name`) in the index (e.g.: 'york' is a subname of 'new-york').
+* position: based on query keyword position in index keyword. If query is a subname of a city name, 
+    gives higher score if the substring is located at the beginning of city 
+    name (e.g.: 'new' and 'york' have positions 0 and 1 respectively 
+    in 'new-york')
+
+* Distance between points is first calculated in km, assuming the Earth is 
+a perfect sphere, and a simple math.exp(-d/300) is applied.
+
 ### Build, test and run locally
 Install and create a virtual environement
 ```bash
