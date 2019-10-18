@@ -7,6 +7,8 @@ Basically, Semaphore builds the image, runs the tests and deploy the container t
 HTTP API endpoint: [http://city-search-engine.herokuapp.com/](http://city-search-engine.herokuapp.com/)
 HTTPS API endpoint: [https://city-search-engine.herokuapp.com/](https://city-search-engine.herokuapp.com/) (Swagger not showing up for now)
 
+Public Docker image: [https://hub.docker.com/r/jstpierref/flask_city_search_engine](https://hub.docker.com/r/jstpierref/flask_city_search_engine)
+
 ## How it works: the indexer
 
 General city data are stored in memory in a hash table and the search index itself uses a trie data structure, which ensures fast lookups.
