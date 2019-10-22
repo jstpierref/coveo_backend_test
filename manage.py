@@ -18,7 +18,7 @@ manager = Manager(app)
 
 @manager.command
 def run():
-	# on Heroku, port is defined in env. variables, but locally we run on 5000.
+    # on Heroku, port is defined in env. variables, but locally we run on 5000.
     port = os.getenv("PORT", 5000)
     app.run(host="0.0.0.0", port=port)
 
