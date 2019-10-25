@@ -45,12 +45,6 @@ class QueryScoreProcessor:
         def search_result_position_value(position):
             return 1/(position+1.)  
 
-        def check_validity(length_score, query_word, word):
-            # query_word = 
-            if query_word in word:
-                return length_score
-            return 0
-
         search_result_buffer = {}
 
         for current_rtype in ("name","sub_name","alt_name"):
@@ -64,7 +58,6 @@ class QueryScoreProcessor:
         scores = {}
         for idx in search_results.keys():
             length_score = search_result_length_value(search_results[idx][0], query_word)
-            length_score = check_validity(length_score, query_word, search_results[idx][0])
             rtype_score = search_result_type_value(search_results[idx][1])
             position_score = search_result_position_value(search_results[idx][2])
             scores[idx] = (length_score, rtype_score, position_score)
@@ -115,12 +108,23 @@ class AdditionalData:
 class ScoreInterface:
     """Class exposing indexer and scoring logic to API routes.
     """
+    @staticmethod
+    def adjust_query_score(word, additional_data, query_scores):
+        for idx in additional_data.keys():
+            if word not in additional_data[idx]['name']:
+                temp = list(query_scores[idx])
+                temp[0] = 0
+                query_scores[idx] = tuple(temp)
+        return query_scores
+
     def run(self, query):
         geo_scores = None
         word = query.q
 
         unique_ids, query_scores = QueryScoreProcessor.run(word)
         additional_data = AdditionalData.run(unique_ids)
+
+        query_scores = self.adjust_query_score(word, additional_data, query_scores)
 
         if query.lat and query.lon:
             geo_scores = GeoScoreProcessor.run(unique_ids, query.lat, query.lon)
