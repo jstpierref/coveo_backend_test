@@ -45,6 +45,12 @@ class QueryScoreProcessor:
         def search_result_position_value(position):
             return 1/(position+1.)  
 
+        def check_validity(length_score, query_word, word):
+            # query_word = 
+            if query_word in word:
+                return length_score
+            return 0
+
         search_result_buffer = {}
 
         for current_rtype in ("name","sub_name","alt_name"):
@@ -58,6 +64,7 @@ class QueryScoreProcessor:
         scores = {}
         for idx in search_results.keys():
             length_score = search_result_length_value(search_results[idx][0], query_word)
+            length_score = check_validity(length_score, query_word, search_results[idx][0])
             rtype_score = search_result_type_value(search_results[idx][1])
             position_score = search_result_position_value(search_results[idx][2])
             scores[idx] = (length_score, rtype_score, position_score)
